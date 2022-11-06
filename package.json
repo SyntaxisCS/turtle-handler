@@ -1,0 +1,28 @@
+{
+  "name": "turtle-handler",
+  "version": "1.0",
+  "description": "CC:Tweaked Turtle Handler and Controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SyntaxisCS/turtle-handler.git"
+  },
+  "keywords": [
+    "CCTweaked",
+    "ComputerCraft",
+    "Minecraft",
+    "Turtle"
+  ],
+  "author": "SyntaxisCS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SyntaxisCS/turtle-handler/issues"
+  },
+  "homepage": "https://github.com/SyntaxisCS/turtle-handler#readme",
+  "dependencies": {
+    "ws": "^8.10.0"
+  }
+}
