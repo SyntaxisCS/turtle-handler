@@ -1,5 +1,5 @@
 # turtle-handler
-library to help handle and controll computerCraft CC:Tweaked turtles. Uses a class to store all active turtles by unique ids and holds all turtles in a class of their own which stores the websocket client connection. The turtle class also has various commands to make controlling the turtles individually from within node.js easier. Not all commands are in the Turtle class however, see [CC:Tweaked Turtle Docs](https://tweaked.cc/module/turtle.html) for a list of all commands for the turtles.
+library to help handle and control computerCraft CC:Tweaked turtles. Uses a class to store all active turtles by unique ids and holds all turtles in a class of their own which stores the websocket client connection. The turtle class also has various commands to make controlling the turtles individually from within node.js easier. Not all commands are in the Turtle class however, see [CC:Tweaked Turtle Docs](https://tweaked.cc/module/turtle.html) for a list of all commands for the turtles.
 
 ## Websocket configuration
 ```
@@ -31,31 +31,61 @@ $ pastebin get 4nRg9CHU json
 
 create startup.lua file on turtle
 ```
-os.loadAPI("json");
+os.loadAPI("json")
 
 local ws,err = http.websocket("WEBSOCKET URL (NGROK)")
 
 if err then
-    print(err);
+    print(err)
 end
 
 if ws then
     while true do
         -- receive message
-        local msg = ws.receive();
-        print(msg);
-        
-        -- Receive function and load it to variable
+        local msg = ws.receive()
+        print(msg)
+
+        -- receive function and load it to variable
         local obj = json.decode(msg)
         local func = loadstring(obj["func"])
 
-        -- Run function and send values back
-        local bool,funcReturn = func()
-        funcReturn = json.encode(funcReturn)
-        local fullReturn = json.encode(bool,funcReturn)
+        -- run function and send values back
+        local bool,other = func()
+        local fullReturn = json.encode({bool,other})
         ws.send(fullReturn)
     end
 end
+```
+
+### Turtle Storage Handling
+Handling of turtles in the TurtleStore class
+```
+const turtleStore = new TurtleStore();
+```
+
+.addTurtle(turtle)
+```
+let turtle = new Turtle(ws);
+turtleStore.addTurtle(turtle);
+```
+
+.removeTurtle(turtle)
+```
+let turtle = new Turtle(ws);
+turtleStore.removeTurtle(turtle);
+```
+
+.removeTurtleById(id)
+```
+let turtle = new Turtle(ws);
+let turtleId = turtle.id; // get randomly generated id
+turtleStore.removeTurtleById(turtleId); // for times where you don't have direct access to the turtle class but can know the id
+```
+
+.getTurtleById(id)
+```
+let turtleId = "turtleId";
+let farAwayTurtle = turtleStore.getTurtleById(turtleId); // get turtle class when you don't have access to turtle class by know id
 ```
 
 ## Turtle Commands
