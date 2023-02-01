@@ -249,6 +249,72 @@ class Turtle {
         });
     }
 
+    async place(text) {
+        return new Promise((resolve, reject) => {
+            if (!text) {
+                this.sendCommand(`return turtle.place()`);
+            } else {
+                this.sendCommand(`return turtle.place(${text})`);
+            }
+
+            this.webSocketClient.once("message", (msg) => {
+                let parsed = JSON.parse(msg.toString());
+                let bool = parsed[0];
+                let string = parsed[1];
+
+                if (bool) {
+                    resolve({placed:bool,reason:null});
+                } else {
+                    reject({placed:bool,reason:string});
+                }
+            });
+        });
+    }
+
+    async placeUp(text) {
+        return new Promise((resovle, reject) => {
+            if (!text) {
+                this.sendCommand(`return turtle.placeUp()`);
+            } else {
+                this.sendCommand(`return turtle.placeUp(${text})`);
+            }
+
+            this.webSocketClient.once("message", (msg) => {
+                let parsed = JSON.parse(msg.toString());
+                let bool = parsed[0];
+                let string = parsed[1];
+
+                if (bool) {
+                    resovle({placed:bool,reason:null});
+                } else {
+                    reject({placed:bool,reason:string});
+                }
+            });
+        });
+    }
+
+    async placeDown(text) {
+        return new Promise((resolve, reject) => {
+            if (!text) {
+                this.sendCommand(`return turtle.placeDown()`);
+            } else {
+                this.sendCommand(`return turtle.placeDown(${text})`);
+            }
+
+            this.webSocketClient.once("message", (msg) => {
+                let parsed = JSON.parse(msg.toString());
+                let bool = parsed[0];
+                let string = parsed[1];
+
+                if (bool) {
+                    resolve({placed:bool,reason:null});
+                } else {
+                    reject({placed:bool,reason:string});
+                }
+            });
+        });
+    }
+
     async getItemDetail(slot) {
         return new Promise((resolve, reject) => {
             this.sendCommand(`return turtle.getItemDetail(${slot})`);
